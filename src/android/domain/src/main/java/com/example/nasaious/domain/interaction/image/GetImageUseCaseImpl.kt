@@ -8,6 +8,6 @@ class GetImageUseCaseImpl @Inject constructor(
 ) : GetImageUseCase {
     override suspend fun getImages() = imageRepository.getImages()
 
-    override suspend fun getImage(id: Int) = imageRepository.getImage(id)
+    override suspend fun getImage(title: String) = imageRepository.getImage(title)
 }
 

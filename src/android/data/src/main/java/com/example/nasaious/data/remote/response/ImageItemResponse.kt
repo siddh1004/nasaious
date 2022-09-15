@@ -14,7 +14,6 @@ data class ImageItemResponse(
     val url: String,
 ) : RoomMapper<ImageEntity> {
     override fun mapToRoomEntity() = ImageEntity(
-        id = 0,
         copyright = copyright,
         date = date,
         explanation = explanation,

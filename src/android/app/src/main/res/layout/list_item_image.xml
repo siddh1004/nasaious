@@ -17,9 +17,10 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_margin="@dimen/standard_margin_half"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/image_margin_half"
+        android:adjustViewBounds="true"
         android:onClick="@{clickListener}"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         app:imageUrl="@{nasaImage.url}" />
 </layout>

@@ -1,98 +1,71 @@
 package com.example.nasaious.screen.imageDetail
 
-import android.content.ClipData
 import android.os.Bundle
-import android.view.DragEvent
-import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import com.example.nasaious.placeholder.PlaceholderContent
-import com.example.nasaious.databinding.FragmentItemDetailBinding
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.navArgs
+import com.example.nasaious.R
+import com.example.nasaious.base.FragmentBase
+import com.example.nasaious.base.Loading
+import com.example.nasaious.base.Success
+import com.example.nasaious.databinding.FragmentImageDetailBinding
+import com.example.nasaious.screen.imageList.ImageViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a [ItemListFragment]
- * in two-pane mode (on larger screen devices) or self-contained
- * on handsets.
- */
-class ItemDetailFragment : Fragment() {
+@AndroidEntryPoint
+class ImageDetailFragment : FragmentBase(R.layout.fragment_image_detail) {
 
-    /**
-     * The placeholder content this fragment is presenting.
-     */
-    private var item: PlaceholderContent.PlaceholderItem? = null
+    @Inject
+    lateinit var imageViewModel: ImageViewModel
 
-    lateinit var itemDetailTextView: TextView
-    private var toolbarLayout: CollapsingToolbarLayout? = null
+    private lateinit var imagePreviewAdapter: ImageDetailAdapter
 
-    private var _binding: FragmentItemDetailBinding? = null
+    private var _binding: FragmentImageDetailBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val args: ImageDetailFragmentArgs by navArgs()
 
-    private val dragListener = View.OnDragListener { v, event ->
-        if (event.action == DragEvent.ACTION_DROP) {
-            val clipDataItem: ClipData.Item = event.clipData.getItemAt(0)
-            val dragData = clipDataItem.text
-            item = PlaceholderContent.ITEM_MAP[dragData]
-            updateContent()
-        }
-        true
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadData()
+        setBindings(view)
+        setAdapter()
+        setObservers()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private fun loadData() {
+        imageViewModel.getImages()
+    }
 
-        arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the placeholder content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-                item = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
+    private fun setBindings(view: View) {
+        _binding = FragmentImageDetailBinding.bind(view)
+    }
+
+    private fun setAdapter() {
+        imagePreviewAdapter = ImageDetailAdapter()
+        binding.viewPager.adapter = imagePreviewAdapter
+    }
+
+    private fun setObservers() {
+        imageViewModel.viewState.observe { viewState ->
+            binding.progress.isVisible = viewState is Loading
+            when (viewState) {
+                is Success -> {
+                    imagePreviewAdapter.submitList(viewState.data)
+                    val selectedPosition =
+                        (viewState.data.indices).firstOrNull { viewState.data[it].title == args.title }
+                            ?: 0
+                    binding.viewPager.setCurrentItem(selectedPosition, false)
+                }
+                else -> {
+                }
             }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
-        val rootView = binding.root
-
-        toolbarLayout = binding.toolbarLayout
-        itemDetailTextView = binding.itemDetail
-
-        updateContent()
-        rootView.setOnDragListener(dragListener)
-
-        return rootView
-    }
-
-    private fun updateContent() {
-        toolbarLayout?.title = item?.content
-
-        // Show the placeholder content as text in a TextView.
-        item?.let {
-            itemDetailTextView.text = it.details
-        }
-    }
-
-    companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

@@ -27,9 +27,9 @@ class ImageRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getImage(id: Int): Result<Image> {
+    override suspend fun getImage(title: String): Result<Image> {
         return try {
-            val image = imageDao.getImage(id).mapToDomainModel()
+            val image = imageDao.getImage(title).mapToDomainModel()
             Success(image)
         } catch (ex: Exception) {
             Failure(HttpError(ex.message ?: GENERAL_NETWORK_ERROR))

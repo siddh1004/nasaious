@@ -9,8 +9,8 @@ abstract class ImageDao {
     @Query("SELECT * FROM $IMAGE_TABLE_NAME")
     abstract suspend fun getImages(): List<ImageEntity>
 
-    @Query("SELECT * FROM $IMAGE_TABLE_NAME Where id = :id")
-    abstract suspend fun getImage(id: Int): ImageEntity
+    @Query("SELECT * FROM $IMAGE_TABLE_NAME Where title = :title")
+    abstract suspend fun getImage(title: String): ImageEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun saveImages(images: List<ImageEntity>)

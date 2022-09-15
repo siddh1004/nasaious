@@ -1,9 +1,13 @@
 package com.example.nasaious.screen.imageList
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.nasaious.R
 import com.example.nasaious.base.FragmentBase
 import com.example.nasaious.base.Loading
@@ -17,7 +21,7 @@ import javax.inject.Inject
 class ImageListFragment : FragmentBase(R.layout.fragment_image_list) {
 
     @Inject
-    lateinit var imageListViewModel: ImageListViewModel
+    lateinit var imageListViewModel: ImageViewModel
 
     private lateinit var imageItemAdapter: ImageItemAdapter
 
@@ -43,7 +47,8 @@ class ImageListFragment : FragmentBase(R.layout.fragment_image_list) {
     private fun setAdapter() {
         imageItemAdapter = ImageItemAdapter(::onImageClick)
         binding.imageRecyclerView.adapter = imageItemAdapter
-        binding.imageRecyclerView.layoutManager = GridLayoutManager(context, 2)
+        binding.imageRecyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     }
 
     private fun setObservers() {
@@ -60,7 +65,7 @@ class ImageListFragment : FragmentBase(R.layout.fragment_image_list) {
     }
 
     private fun onImageClick(image: Image) {
-//        navigateTo(ImageListFragmentDirections.moveToImagePreviewFragment(navArgs.album, position))
+        navigateTo(ImageListFragmentDirections.showImageDetail(image.title))
     }
 
     override fun onDestroy() {

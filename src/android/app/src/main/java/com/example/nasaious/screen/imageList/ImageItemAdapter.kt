@@ -51,7 +51,7 @@ class ImageItemAdapter(private val onClick: (Image) -> Unit) :
 
 object ImageDiffCallback : DiffUtil.ItemCallback<Image>() {
     override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.title == newItem.title
     }
 
     override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {

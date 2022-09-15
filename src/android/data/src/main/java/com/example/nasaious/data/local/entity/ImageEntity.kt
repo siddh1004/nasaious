@@ -8,20 +8,18 @@ import com.example.nasaious.domain.model.Image
 
 @Entity(tableName = IMAGE_TABLE_NAME)
 data class ImageEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     val copyright: String?,
     val date: String,
     val explanation: String,
     val hdurl: String,
     val media_type: String,
     val service_version: String,
+    @PrimaryKey
     val title: String,
     val url: String,
 ) : DomainMapper<Image> {
 
     override fun mapToDomainModel() = Image(
-        id = id,
         copyright = copyright,
         date = date,
         url = url,

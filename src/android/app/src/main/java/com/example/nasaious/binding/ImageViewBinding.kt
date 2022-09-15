@@ -36,7 +36,6 @@ private fun loadUrl(
 ) {
     val options: RequestOptions = RequestOptions()
         .placeholder(ColorDrawable(Color.GRAY))
-        .centerCrop()
         .error(placeholder ?: ColorDrawable(Color.GRAY))
 
     Glide

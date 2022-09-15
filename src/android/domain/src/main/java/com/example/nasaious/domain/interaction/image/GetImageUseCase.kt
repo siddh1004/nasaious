@@ -5,6 +5,6 @@ import com.example.nasaious.domain.model.Result
 
 interface GetImageUseCase {
     suspend fun getImages(): Result<List<Image>>
-    suspend fun getImage(id: Int): Result<Image>
+    suspend fun getImage(title: String): Result<Image>
 }
 

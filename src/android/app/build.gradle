@@ -6,6 +6,7 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdk Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)

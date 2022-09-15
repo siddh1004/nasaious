@@ -3,6 +3,7 @@ package com.example.nasaious.screen.imageDetail
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.nasaious.R
 import com.example.nasaious.base.FragmentBase
@@ -31,6 +32,7 @@ class ImageDetailFragment : FragmentBase(R.layout.fragment_image_detail) {
         loadData()
         setBindings(view)
         setAdapter()
+        setEventHandlers()
         setObservers()
     }
 
@@ -45,6 +47,12 @@ class ImageDetailFragment : FragmentBase(R.layout.fragment_image_detail) {
     private fun setAdapter() {
         imagePreviewAdapter = ImageDetailAdapter()
         binding.viewPager.adapter = imagePreviewAdapter
+    }
+
+    private fun setEventHandlers() {
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun setObservers() {

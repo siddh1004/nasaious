@@ -7,10 +7,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.example.nasaious.R
 
 abstract class FragmentBase(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
 
-    private val navOptionsBuilder = NavOptions.Builder()
+    private val navOptionsBuilder =
+        NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_in)
+            .setExitAnim(R.anim.fade_out)
+            .setPopEnterAnim(R.anim.fade_in)
+            .setPopExitAnim(R.anim.slide_out)
 
     fun navigateTo(direction: NavDirections) {
         val navAction =

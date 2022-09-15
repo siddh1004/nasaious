@@ -1,12 +1,8 @@
 package com.example.nasaious.screen.imageList
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.nasaious.R
 import com.example.nasaious.base.FragmentBase

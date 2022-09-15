@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/nasaious/src/android/app/src/main/res/layout-sw600dp/fragment_item_detail.xml" value="0.27049180327868855" />
+        <entry key="..\:/Projects/nasaious/src/android/app/src/main/res/layout/activity_item_detail.xml" value="0.18802083333333333" />
+        <entry key="..\:/Projects/nasaious/src/android/app/src/main/res/layout/activity_main.xml" value="0.36685773840541946" />
+        <entry key="..\:/Projects/nasaious/src/android/app/src/main/res/layout/fragment_image_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/nasaious/src/android/app/src/main/res/layout/fragment_item_detail.xml" value="0.358695652173913" />
+        <entry key="..\:/Projects/nasaious/src/android/app/src/main/res/layout/list_item_image.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

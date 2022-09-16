@@ -23,8 +23,7 @@
         android:background="?android:selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         android:onClick="@{clickListener}"
-        android:scaleType="fitCenter"
         android:transitionName="nasa_image"
         app:imageUrl="@{nasaImage.url}"
-        app:size="@{400}" />
+        app:size="@{200}" />
 </layout>

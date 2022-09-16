@@ -22,6 +22,8 @@ ext {
     moshiVersion = '1.13.0'
     gsonVersion = '2.8.9'
 
+    hiltTestingVersion = '2.38.1'
+
     appDependencies = [
             coroutine          : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion",
             kotlinReflect      : "org.jetbrains.kotlin:kotlin-reflect:$kotlinReflectVersion",
@@ -49,6 +51,8 @@ ext {
             //image loading
             glide              : "com.github.bumptech.glide:glide:$glide",
             glideCompiler      : "com.github.bumptech.glide:compiler:$glideCompiler",
+
+            hiltTesting        : "com.google.dagger:hilt-android-testing:$hiltTestingVersion"
     ]
 
     domainDependencies = [

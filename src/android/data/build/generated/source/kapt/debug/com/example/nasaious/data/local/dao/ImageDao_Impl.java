@@ -37,51 +37,50 @@ public final class ImageDao_Impl extends ImageDao {
     this.__insertionAdapterOfImageEntity = new EntityInsertionAdapter<ImageEntity>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `nasa_image` (`id`,`copyright`,`date`,`explanation`,`hdurl`,`media_type`,`service_version`,`title`,`url`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `nasa_image` (`copyright`,`date`,`explanation`,`hdurl`,`media_type`,`service_version`,`title`,`url`) VALUES (?,?,?,?,?,?,?,?)";
       }
 
       @Override
       public void bind(SupportSQLiteStatement stmt, ImageEntity value) {
-        stmt.bindLong(1, value.getId());
         if (value.getCopyright() == null) {
-          stmt.bindNull(2);
+          stmt.bindNull(1);
         } else {
-          stmt.bindString(2, value.getCopyright());
+          stmt.bindString(1, value.getCopyright());
         }
         if (value.getDate() == null) {
-          stmt.bindNull(3);
+          stmt.bindNull(2);
         } else {
-          stmt.bindString(3, value.getDate());
+          stmt.bindString(2, value.getDate());
         }
         if (value.getExplanation() == null) {
-          stmt.bindNull(4);
+          stmt.bindNull(3);
         } else {
-          stmt.bindString(4, value.getExplanation());
+          stmt.bindString(3, value.getExplanation());
         }
         if (value.getHdurl() == null) {
-          stmt.bindNull(5);
+          stmt.bindNull(4);
         } else {
-          stmt.bindString(5, value.getHdurl());
+          stmt.bindString(4, value.getHdurl());
         }
         if (value.getMedia_type() == null) {
-          stmt.bindNull(6);
+          stmt.bindNull(5);
         } else {
-          stmt.bindString(6, value.getMedia_type());
+          stmt.bindString(5, value.getMedia_type());
         }
         if (value.getService_version() == null) {
-          stmt.bindNull(7);
+          stmt.bindNull(6);
         } else {
-          stmt.bindString(7, value.getService_version());
+          stmt.bindString(6, value.getService_version());
         }
         if (value.getTitle() == null) {
-          stmt.bindNull(8);
+          stmt.bindNull(7);
         } else {
-          stmt.bindString(8, value.getTitle());
+          stmt.bindString(7, value.getTitle());
         }
         if (value.getUrl() == null) {
-          stmt.bindNull(9);
+          stmt.bindNull(8);
         } else {
-          stmt.bindString(9, value.getUrl());
+          stmt.bindString(8, value.getUrl());
         }
       }
     };
@@ -141,7 +140,6 @@ public final class ImageDao_Impl extends ImageDao {
       public List<ImageEntity> call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfCopyright = CursorUtil.getColumnIndexOrThrow(_cursor, "copyright");
           final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
           final int _cursorIndexOfExplanation = CursorUtil.getColumnIndexOrThrow(_cursor, "explanation");
@@ -153,8 +151,6 @@ public final class ImageDao_Impl extends ImageDao {
           final List<ImageEntity> _result = new ArrayList<ImageEntity>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final ImageEntity _item;
-            final int _tmpId;
-            _tmpId = _cursor.getInt(_cursorIndexOfId);
             final String _tmpCopyright;
             if (_cursor.isNull(_cursorIndexOfCopyright)) {
               _tmpCopyright = null;
@@ -203,7 +199,7 @@ public final class ImageDao_Impl extends ImageDao {
             } else {
               _tmpUrl = _cursor.getString(_cursorIndexOfUrl);
             }
-            _item = new ImageEntity(_tmpId,_tmpCopyright,_tmpDate,_tmpExplanation,_tmpHdurl,_tmpMedia_type,_tmpService_version,_tmpTitle,_tmpUrl);
+            _item = new ImageEntity(_tmpCopyright,_tmpDate,_tmpExplanation,_tmpHdurl,_tmpMedia_type,_tmpService_version,_tmpTitle,_tmpUrl);
             _result.add(_item);
           }
           return _result;
@@ -216,18 +212,21 @@ public final class ImageDao_Impl extends ImageDao {
   }
 
   @Override
-  public Object getImage(final int id, final Continuation<? super ImageEntity> continuation) {
-    final String _sql = "SELECT * FROM nasa_image Where id = ?";
+  public Object getImage(final String title, final Continuation<? super ImageEntity> continuation) {
+    final String _sql = "SELECT * FROM nasa_image Where title = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
-    _statement.bindLong(_argIndex, id);
+    if (title == null) {
+      _statement.bindNull(_argIndex);
+    } else {
+      _statement.bindString(_argIndex, title);
+    }
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
     return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<ImageEntity>() {
       @Override
       public ImageEntity call() throws Exception {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfCopyright = CursorUtil.getColumnIndexOrThrow(_cursor, "copyright");
           final int _cursorIndexOfDate = CursorUtil.getColumnIndexOrThrow(_cursor, "date");
           final int _cursorIndexOfExplanation = CursorUtil.getColumnIndexOrThrow(_cursor, "explanation");
@@ -238,8 +237,6 @@ public final class ImageDao_Impl extends ImageDao {
           final int _cursorIndexOfUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "url");
           final ImageEntity _result;
           if(_cursor.moveToFirst()) {
-            final int _tmpId;
-            _tmpId = _cursor.getInt(_cursorIndexOfId);
             final String _tmpCopyright;
             if (_cursor.isNull(_cursorIndexOfCopyright)) {
               _tmpCopyright = null;
@@ -288,7 +285,7 @@ public final class ImageDao_Impl extends ImageDao {
             } else {
               _tmpUrl = _cursor.getString(_cursorIndexOfUrl);
             }
-            _result = new ImageEntity(_tmpId,_tmpCopyright,_tmpDate,_tmpExplanation,_tmpHdurl,_tmpMedia_type,_tmpService_version,_tmpTitle,_tmpUrl);
+            _result = new ImageEntity(_tmpCopyright,_tmpDate,_tmpExplanation,_tmpHdurl,_tmpMedia_type,_tmpService_version,_tmpTitle,_tmpUrl);
           } else {
             _result = null;
           }

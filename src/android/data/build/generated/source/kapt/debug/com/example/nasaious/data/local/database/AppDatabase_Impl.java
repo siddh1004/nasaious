@@ -39,9 +39,9 @@ public final class AppDatabase_Impl extends AppDatabase {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `nasa_image` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `copyright` TEXT, `date` TEXT NOT NULL, `explanation` TEXT NOT NULL, `hdurl` TEXT NOT NULL, `media_type` TEXT NOT NULL, `service_version` TEXT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `nasa_image` (`copyright` TEXT, `date` TEXT NOT NULL, `explanation` TEXT NOT NULL, `hdurl` TEXT NOT NULL, `media_type` TEXT NOT NULL, `service_version` TEXT NOT NULL, `title` TEXT NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`title`))");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d1a0f3b0c715b85cc557e45a5226e32')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6ef13de5e378d4070ce2de02606074e9')");
       }
 
       @Override
@@ -85,15 +85,14 @@ public final class AppDatabase_Impl extends AppDatabase {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsNasaImage = new HashMap<String, TableInfo.Column>(9);
-        _columnsNasaImage.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashMap<String, TableInfo.Column> _columnsNasaImage = new HashMap<String, TableInfo.Column>(8);
         _columnsNasaImage.put("copyright", new TableInfo.Column("copyright", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNasaImage.put("date", new TableInfo.Column("date", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNasaImage.put("explanation", new TableInfo.Column("explanation", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNasaImage.put("hdurl", new TableInfo.Column("hdurl", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNasaImage.put("media_type", new TableInfo.Column("media_type", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNasaImage.put("service_version", new TableInfo.Column("service_version", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsNasaImage.put("title", new TableInfo.Column("title", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNasaImage.put("title", new TableInfo.Column("title", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNasaImage.put("url", new TableInfo.Column("url", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysNasaImage = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesNasaImage = new HashSet<TableInfo.Index>(0);
@@ -106,7 +105,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "9d1a0f3b0c715b85cc557e45a5226e32", "b050870fdd6a0f44814c8a0ef57c48c2");
+    }, "6ef13de5e378d4070ce2de02606074e9", "af16f5a9ab1daded40f16c20c296bd7c");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)

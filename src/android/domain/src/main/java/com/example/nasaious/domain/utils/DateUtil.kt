@@ -1,7 +1,13 @@
 package com.example.nasaious.domain.utils
 
-import java.util.*
+import com.example.nasaious.domain.exception.InvalidDateFormatException
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
-internal fun getDate(date: String): Date {
-    return Date()
+fun getDate(date: String): LocalDate? {
+    return try {
+        LocalDate.parse(date, DateTimeFormatter.ISO_DATE)
+    } catch (ex: Exception) {
+        throw InvalidDateFormatException()
+    }
 }

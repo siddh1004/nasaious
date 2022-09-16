@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.nasaious.data.local.dao.ImageDao
 import com.example.nasaious.data.local.entity.ImageEntity
 
